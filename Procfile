@@ -1,0 +1,1 @@
+web: gunicorn supervisorio.wsgi --log-file -
