@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.urls import path
 
 from supervisorio.home_view import home
+from supervisorio.tarefas import urls
+from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),
+    path('tarefas/', include('supervisorio.tarefas.urls'))
 ]
