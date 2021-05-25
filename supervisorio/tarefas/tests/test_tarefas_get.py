@@ -26,15 +26,25 @@ def test_botao_salvar_presente(resposta):
 @pytest.fixture
 def lista_de_tarefas_pendentes(db):
     tarefas = [
-        Tarefa(name='Tarefa 1', done='False'),
-        Tarefa(name='Tarefa 2', done='False'),
+        Tarefa(name='Tarefa 1', done=False),
+        Tarefa(name='Tarefa 2', done=False),
     ]
     Tarefa.objects.bulk_create(tarefas)
     return tarefas
 
 
 @pytest.fixture
-def resposta_com_lista_de_tarefas(client, lista_de_tarefas_pendentes):
+def lista_de_tarefas_concluidas(db):
+    tarefas_ok = [
+        Tarefa(name='Tarefa 3', done=True),
+        Tarefa(name='Tarefa 4', done=True),
+    ]
+    Tarefa.objects.bulk_create(tarefas_ok)
+    return tarefas_ok
+
+
+@pytest.fixture
+def resposta_com_lista_de_tarefas(client, lista_de_tarefas_pendentes, lista_de_tarefas_concluidas):
     resp = client.get(reverse('tarefas:home'))
     return resp
 
@@ -42,3 +52,8 @@ def resposta_com_lista_de_tarefas(client, lista_de_tarefas_pendentes):
 def test_lista_de_tarefa_pendentes_presente(resposta_com_lista_de_tarefas, lista_de_tarefas_pendentes):
     for tarefa in lista_de_tarefas_pendentes:
         assertContains(resposta_com_lista_de_tarefas, tarefa.name)
+
+
+def test_lista_de_tarefa_concluidas_presente(resposta_com_lista_de_tarefas, lista_de_tarefas_concluidas):
+    for tarefa_ok in lista_de_tarefas_concluidas:
+        assertContains(resposta_com_lista_de_tarefas, tarefa_ok.name)
