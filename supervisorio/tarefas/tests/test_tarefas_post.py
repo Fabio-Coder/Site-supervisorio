@@ -6,7 +6,7 @@ from supervisorio.tarefas.models import Tarefa
 
 @pytest.fixture
 def resposta(client, db):
-    resp = client.post(reverse('tarefas:home'), data={'nome': 'Tarefa'})
+    resp = client.post(reverse('tarefas:home'), data={'name': 'Tarefa'})
     return resp
 
 
@@ -20,7 +20,7 @@ def test_redirect_depois_do_salvamento(resposta):
 
 @pytest.fixture
 def resposta_dado_invalido(client, db):
-    resp = client.post(reverse('tarefas:home'), data={'nome': ''})
+    resp = client.post(reverse('tarefas:home'), data={'name': ''})
     return resp
 
 
