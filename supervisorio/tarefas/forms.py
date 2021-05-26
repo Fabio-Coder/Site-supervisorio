@@ -8,7 +8,8 @@ class TarefaNovaForm(ModelForm):
         model = Tarefa
         fields = ['name']
 
+
 class TarefaForm(ModelForm):
     class Meta:
         model = Tarefa
-        fields = ['name','done']
+        fields = ['name', 'done']

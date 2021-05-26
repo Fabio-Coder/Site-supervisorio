@@ -29,8 +29,9 @@
             <form action="{% url 'tarefas:detalhe' tarefa_id=tarefa.id %}" method="post">
                 {% csrf_token %}
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="{{tarefa.name}}" required="required"
+                    <input type="text" class="form-control" required="required"
                            aria-label="Descrição da tarefa" name="name" value="{{tarefa.name}}">
+                    <input type="hidden" value="checked" name="done">
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-outline-success" id="button-addon2">Feita</button>
                     </div>
@@ -40,17 +41,33 @@
             {% endfor %}
             <h2 class="mt-5">Tarefas Concluídas</h2>
             {% for tarefa in tarefas_concluidas %}
-            <form action="{% url 'tarefas:detalhe' tarefa_id=tarefa.id %}" method="post">
-                {% csrf_token %}
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="{{tarefa.name}}" required="required"
-                           aria-label="Descrição da tarefa" name="name" value="{{tarefa.name}}">
-                    <input type="hidden" value="checked" name="done">
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-outline-warning" id="button-addon2">Pendente</button>
-                    </div>
+            <div class="row">
+                <div class="col-2">
+                    <form action="{% url 'tarefas:delete' tarefa_id=tarefa.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-danger" id="button-addon2">Apagar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </form>
+                <div class="col-10" >
+                    <form action="{% url 'tarefas:detalhe' tarefa_id=tarefa.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="{{tarefa.name}}" required="required"
+                                   aria-label="Descrição da tarefa" name="name" value="{{tarefa.name}}">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-warning" id="button-addon2">Pendente
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
 
             {% endfor %}
         </div>
