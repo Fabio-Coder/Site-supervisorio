@@ -1,6 +1,6 @@
 from urllib.request import HTTPRedirectHandler
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from django.shortcuts import render
@@ -32,8 +32,16 @@ def home(request):
 
 
 def detalhe(request, tarefa_id):
-    tarefa = Tarefa.objects.get(id=tarefa_id)
-    form = TarefaForm(request.POST, instance=tarefa)
-    if form.is_valid():
-        form.save()
+    if request.method == 'POST':
+        tarefa = Tarefa.objects.get(id=tarefa_id)
+        form = TarefaForm(request.POST, instance=tarefa)
+        if form.is_valid():
+            form.save()
+    return HttpResponseRedirect(reverse('tarefas:home'))
+
+
+def delete(request, tarefa_id):
+    if request.method == 'POST':
+        tarefa_a_apagar = Tarefa.objects.get(id=tarefa_id)
+        tarefa_a_apagar.delete()
     return HttpResponseRedirect(reverse('tarefas:home'))

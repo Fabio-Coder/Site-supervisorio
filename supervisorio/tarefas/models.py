@@ -5,3 +5,4 @@ from django.db import models
 class Tarefa(models.Model):
     name = models.CharField(max_length=140)
     done = models.BooleanField(default=False)
+    objects = models.Manager()
